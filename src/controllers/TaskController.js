@@ -50,4 +50,36 @@ TaskController.delete('/:id', async (req, res) => {
     }   
 })
 
+TaskController.put('/:id', async (req, res) => {
+    const { id } = req.params
+    const { title, description, status, created_at } = req.body
+
+    // console.log(id,title, description, status, created_at)
+
+    if (!title) {
+        return res.status(400).json({ error: 'Title is not to be empty'})
+    }
+
+    try {
+        const existsTask = await TaskService.existsById(id)
+        if (existsTask) {
+            try {
+                res.json(await TaskService.update({
+                    id,
+                    title,
+                    description,
+                    status,
+                    created_at,
+                }))
+            } catch (error) {
+                return res.status(500).json({ error: 'TaskService.update() is not working'})
+            }
+        } else {
+            return res.status(404).json({ error: `Id ${id} not found.`})
+        }
+    } catch (error) {
+            return res.status(500).json({ error: 'TaskService.existsById() is not working'})
+    }   
+})
+
 module.exports = TaskController

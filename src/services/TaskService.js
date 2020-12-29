@@ -22,9 +22,20 @@ const destroy = (id) => {
     TaskRepository.remove(id)
 }
 
+const update = async ({ id, title, description, status, created_at }) => {
+    return await TaskRepository.update({
+        id,
+        title,
+        description,
+        status,
+        created_at
+    })
+}
+
 module.exports = {
     index,
     store,
     existsById,
-    destroy
+    destroy,
+    update
 }
