@@ -22,7 +22,23 @@ const save = async ({ title, description, status }) => {
     return response.rows[0]
 }
 
+const findById = async (id) => {
+    const response = await Database.query(`
+        select id from tasks where id = $1
+    `, [id])
+
+    return response.rows[0]
+}
+
+const remove = (id) => {
+    Database.query(`
+        delete from tasks where id =$1
+    `, [id])
+}
+
 module.exports = {
     findAll,
-    save
+    save,
+    findById,
+    remove
 }
