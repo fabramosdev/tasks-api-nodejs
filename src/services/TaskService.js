@@ -32,10 +32,15 @@ const update = async ({ id, title, description, status, created_at }) => {
     })
 }
 
+const show = async (id) => {
+    return await TaskRepository.findTaskById(id)
+}
+
 module.exports = {
     index,
     store,
     existsById,
     destroy,
-    update
+    update,
+    show
 }

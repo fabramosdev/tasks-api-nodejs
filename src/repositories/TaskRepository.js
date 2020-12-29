@@ -8,6 +8,14 @@ const findAll = async () => {
     return response.rows
 }
 
+const findTaskById = async (id) => {
+    const response = await Database.query(`
+        select * from tasks where id = $1
+    `, [id])
+
+    return response.rows[0]
+}
+
 const save = async ({ title, description, status }) => {
     const response = await Database.query(`
         insert into tasks (
@@ -57,5 +65,6 @@ module.exports = {
     save,
     findById,
     remove,
-    update
+    update,
+    findTaskById
 }
